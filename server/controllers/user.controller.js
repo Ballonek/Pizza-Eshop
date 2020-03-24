@@ -4,7 +4,7 @@ const UserController = {
     createUser: async function createUser(req, res) {
         try {
             const user = new User({
-                name: req.body.name,
+                username: req.body.username,
                 email: req.body.email,
                 password: req.body.password,
             });

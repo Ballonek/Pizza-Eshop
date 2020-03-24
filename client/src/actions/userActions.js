@@ -35,9 +35,27 @@ export const loadUser = () => async (dispatch, getState) => {
 };
 
 // Register User
-export const registerUser = (user) => dispatch => {
+export const registerUser = (user) => async dispatch => {
   // Headers
-  
+  const config = {
+    headers: {
+      'Content-type': 'application/json'
+    }
+  };
+
+  const body = JSON.stringify(user);
+  try {
+    const res = await axios.post('/api/users/', body, config);
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: REGISTER_FAIL,
+      payload: error.response.message
+    });
+  }
 };
 
 // Login User
