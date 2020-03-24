@@ -4,14 +4,17 @@ const User = require('../models/user.model');
 
 const auth = async (req, res, next) => {
   try {
+
+    if (!req.header('Authorization')) throw Error('No token provided'); 
+
     const token = req.header('Authorization').replace('Bearer ', '');
 
     // Check for token
     if (!token){
-      return res.status(401).json({ msg: 'No token, authorizaton denied' });
+      throw Error('No token, authorizaton denied' );
     }
     // Verify token
-    const decoded = jwt.verify(token, config.get('jwtSecret'));
+    const decoded = await jwt.verify(token, config.get('jwtSecret'));
 
     const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
 
@@ -22,8 +25,8 @@ const auth = async (req, res, next) => {
     req.token = token;
     req.user = user;
     next();
-  } catch (e) {
-    res.status(400).json({ msg: 'Token is not valid' });
+  } catch (error) {
+    res.status(401).json({ msg: error.message });
   }
 }
 
