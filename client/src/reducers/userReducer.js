@@ -11,7 +11,7 @@ import {
 
 const initialState = {
     token: localStorage.getItem('token'),
-    isAuthenticated: null,
+    isAuthenticated: false,
     isLoading: false,
     user: {}
 };
@@ -46,10 +46,11 @@ export default function (state = initialState, action) {
             localStorage.removeItem('token');
             return {
                 ...state,
-                token: null,
-                user: null,
+                token: localStorage.getItem('token'),
+                user: {},
                 isAuthenticated: false,
-                isLoading: false
+                isLoading: false,
+                mgs: action.payload
             };
         default:
             return state

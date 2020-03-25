@@ -1,7 +1,14 @@
 import React from "react";
-import loginImg from "../../login.svg";
+import loginImg from "../img/Logo.png";
 import { registerUser } from '../../actions/userActions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import {
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+} from 'reactstrap';
 
 export const Register = (props) => {
   const dispatch = useDispatch();
@@ -21,37 +28,37 @@ export const Register = (props) => {
 
   return (
     <div className="base-container" ref={props.containerRef}>
-      <form onSubmit={register}>
+      <Form onSubmit={register} autoComplete="off">
         <div className="header">Register</div>
           <div className="content">
             <div className="image">
-              <img src={loginImg} />
+              <img src={loginImg} alt="register" />
             </div>
               
             <div className="form">
-              <div className="form-group">
-                <label htmlFor="username">Username</label>
-                <input type="text" name="username" placeholder="username" />
-              </div>
+              <FormGroup>
+              <Input type="text" name="username" autoComplete="none" />
+              <Label for="username" className="label-name"><span className="content-name">Username</span></Label>
+              </FormGroup>
                 
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input type="text" name="email" placeholder="email" />
-              </div>
+              <FormGroup>
+              <input type="text" name="email" autoComplete="none" />
+              <Label for="email" className="label-name"><span className="content-name">Email</span></Label>
+              </FormGroup>
                 
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input type="new-password" name="password" placeholder="password" />
-              </div>    
+              <FormGroup>
+              <input type="password" name="password" autoComplete="none" />
+              <Label for="password" className="label-name"><span className="content-name">Password</span></Label>
+              </FormGroup>    
             </div>
           
           <div className="footer">
-              <button className="btn">
+              <Button className="btn">
                 Register
-              </button>
+              </Button>
           </div>
         </div>
-      </form>
+      </Form>
     </div>
   );
 }
