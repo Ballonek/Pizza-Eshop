@@ -1,0 +1,23 @@
+.recipe {
+    display: grid;
+    width: 70%;
+    text-align: center;
+    margin: 35px auto;
+    grid-template-areas:
+    'header header header header header button'
+    'menu main main main right right'
+    'menu footer footer footer footer footer';
+
+    &-header{
+        grid-area: header;
+    }
+    ul{
+        grid-area: menu;
+    }
+    img {
+        grid-area: right;
+    }
+    .summary {
+        grid-area: main;
+    }
+}

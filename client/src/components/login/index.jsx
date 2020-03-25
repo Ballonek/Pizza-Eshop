@@ -20,7 +20,7 @@ const LoginRegister = () => {
   }, [])
 
   if (isAuthenticated) {
-    return <Redirect to='/recipes' />
+    return <Redirect to='/recipes/636601' />
   }
 
 

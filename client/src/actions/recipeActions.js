@@ -25,7 +25,7 @@ export const loadRecipe = (id) => async dispatch => {
     } catch (error) {
         dispatch({
             type: RECIPE_ERROR,
-            payload: error.response.data
+            payload: error.response
         })
     }
 }
