@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
     favoriteRecipes: [{
         id: {
             type: Number,
-            required: true
+            required: true,
         },
         title: {
             type: String,

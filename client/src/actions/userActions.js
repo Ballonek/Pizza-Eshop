@@ -14,6 +14,10 @@ import {
 
 // Check token & load user
 export const loadUser = () => async (dispatch, getState) => {
+  if (getState().user.isAuthenticated) {
+    return
+  }
+
   // User loading
   dispatch({ type: USER_LOADING });
 

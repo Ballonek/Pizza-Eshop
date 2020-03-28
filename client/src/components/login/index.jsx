@@ -6,22 +6,25 @@ import "./style.scss";
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-// export { Login } from "./login";
-// export { Register } from "./register";
 
 const LoginRegister = () => {
   const [isLogginActive, setIsLogginActive] = useState(true);
   const [rightSide, setRightSide] = useState('');
   const isAuthenticated = useSelector(state => state.user.isAuthenticated);
+  const isLoading = useSelector(state => state.user.isLoading);
 
   useEffect(() => {
-    document.querySelector('.right-side').classList.add('right');
-    setRightSide(document.querySelector('.right-side'));
-  }, [])
+    if (!isLoading) {
+      document.querySelector('.right-side').classList.add('right');
+      setRightSide(document.querySelector('.right-side'));
+    }
+  }, [isLoading])
 
   if (isAuthenticated) {
-    return <Redirect to='/recipes/636601' />
+    return <Redirect to='/dashboard' />
   }
+
+
 
 
   const changeState = () => {
@@ -40,21 +43,25 @@ const LoginRegister = () => {
   const currentActive = isLogginActive ? "login" : "register";
 
   return (
-    <div className="login">
-      <div className="container">
-        {isLogginActive && (
-          <Login />
-        )}
-        {!isLogginActive && (
-          <Register />
-        )}
+    !isLoading ? 
+      <div className="login">
+        <div className="container">
+        
+          {isLogginActive && (
+            <Login />
+          )}
+          {!isLogginActive && (
+            <Register />
+          )}
+        </div>
+        <RightSide
+          current={current}
+          currentActive={currentActive}
+          onClick={changeState}
+        />
       </div>
-      <RightSide
-        current={current}
-        currentActive={currentActive}
-        onClick={changeState}
-      />
-    </div>
+      :
+      <h1>Loading...</h1>
   );
 }
 
