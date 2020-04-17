@@ -6,14 +6,15 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL,
+    REGISTER_FAIL
 } from '../actions/types'
 
 const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: false,
     isLoading: false,
-    user: {}
+    user: {},
+    favoriteLoading: false
 };
 
 export default function (state = initialState, action) {
@@ -50,7 +51,7 @@ export default function (state = initialState, action) {
                 user: {},
                 isAuthenticated: false,
                 isLoading: false,
-                mgs: action.payload
+                msg: action.payload
             };
         default:
             return state

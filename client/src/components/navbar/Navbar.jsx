@@ -1,38 +1,51 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux';
-import logo from '../img/Logo.png';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import "./style.scss";
-import { logoutUser } from '../../actions/userActions';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  Container,
+  Badge
+} from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faShoppingBasket } from '@fortawesome/free-solid-svg-icons'
+import { useSelector } from 'react-redux';
 
 
-const Navbar = () => {
-    const isAuthenticated = useSelector(state => state.user.isAuthenticated);
+const Menu = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const amount = useSelector(state => state.order.orderAmount);
+  const toggle = () => setIsOpen(!isOpen);
 
-    const dispatch = useDispatch();
-
-    const logout = () => {
-        dispatch(logoutUser());
-    }
-    
-    return (
-        <div className="navbar">
-            <nav>
-                <Link to='/' className="logo">
-                    <img src={logo} alt="LOGO" srcSet="" />
-                </Link>
-                <ul>
-                    <li>
-                        <Link to='/'>Home</Link>
-                    </li>
-                    {!isAuthenticated ? <li><Link to='/login'>Login/Register</Link></li> : ""}
-                    {isAuthenticated ? <li><Link to='/dashboard'>Dashboard</Link></li> : ""}
-                    {isAuthenticated ? <li><Link to='/recipes'>Recipes</Link></li> : ""}
-                    {isAuthenticated ? <li><Link to='/login' onClick={logout}>Logout</Link></li> : ""}
-                </ul>
-            </nav>
-        </div>
-    );
+  return (
+    <div>
+        <Navbar color="dark" dark expand="md">
+        <Container>      
+        <NavbarBrand>Pizza</NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="mr-auto" navbar>
+            <NavItem>
+              <Link to='/'>Domů</Link>
+            </NavItem>
+            <NavItem>
+              <Link to="/jidelni-listek">Jídelní lístek</Link>
+            </NavItem>
+          </Nav>
+            <Link to="/nakupni-kosik" className="navbar-basket">
+              {amount > 0 && <Badge color="danger" pill>{amount}</Badge>}
+              <FontAwesomeIcon icon={faShoppingBasket} /></Link>
+                  </Collapse>
+              </Container>
+      </Navbar>
+    </div>
+  );
 }
 
-export default Navbar;
+export default Menu;
+
+

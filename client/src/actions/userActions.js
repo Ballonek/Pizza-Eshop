@@ -14,26 +14,31 @@ import {
 
 // Check token & load user
 export const loadUser = () => async (dispatch, getState) => {
-  if (getState().user.isAuthenticated) {
-    return
+  if (getState().user.isAuthenticated) { 
+    dispatch({
+      type: USER_LOADED,
+      payload: getState().user.user
+    })
   }
-
   // User loading
   dispatch({ type: USER_LOADING });
 
 
   try {
-    const res = await axios.get('/api/users/me', tokenConfig(getState));
 
+    if (!getState().user.token) {
+      throw Error("No token provided")
+    }
+    const res = await axios.get('/api/users/me', tokenConfig(getState));
     dispatch({
       type: USER_LOADED,
       payload: res.data,
     })
     clearsErrors();
   } catch (error) {
-    dispatch(returnErrors(error.response.data, error.response.status));
+    dispatch(returnErrors({ msg: error.message}), 401);
     dispatch({
-      type: AUTH_ERROR
+      type: AUTH_ERROR,
     });
   }
 
@@ -78,6 +83,7 @@ export const loginUser = ({ email, password }) => async dispatch => {
   const body = JSON.stringify(user);
   try {
     const res = await axios.post('/api/users/login', body, config);
+    dispatch(clearsErrors());
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data
