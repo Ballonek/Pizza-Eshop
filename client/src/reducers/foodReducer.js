@@ -1,11 +1,18 @@
 import {
     FOODS_LOADED,
-    FOODS_LOADING
+    FOODS_LOADING,
+    FOOD_CREATE,
+    FOOD_DELETE_SUCCESS
 } from '../actions/types';
 
 const initialState = {
     isLoading: false,
-    foods: []
+    foods: [{
+        number: 0,
+        price: 0,
+        name: '',
+        description: ''
+    }]
 };
 
 export default function (state = initialState, action) {
@@ -20,6 +27,16 @@ export default function (state = initialState, action) {
                 ...state,
                 isLoading: false,
                 foods: action.payload
+            }
+        case FOOD_CREATE:
+            return {
+                ...state,
+                foods: [...state.foods, action.payload],
+                isLoading: false
+            }
+        case FOOD_DELETE_SUCCESS:
+            return {
+                ...state
             }
         default:
             return state

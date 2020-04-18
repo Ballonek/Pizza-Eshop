@@ -4,13 +4,15 @@ const router = new express.Router();
 
 const {
     getFoods,
-    createFood
+    createFood,
+    deleteFood
 } = require('../controllers/food.controller');
 
 
 //Create user in DB + REST API
 router.get('/', getFoods);
-router.post('/', createFood);
+router.post('/', auth, createFood);
+router.delete('/:id', auth, deleteFood);
 
 
 

@@ -1,18 +1,13 @@
 import {
-    ORDERS_LOADED,
-    ORDERS_LOADING,
     ORDER_CREATE,
     ORDER_ADD_FOOD
 } from '../actions/types';
 
 const initialState = {
     isLoading: false,
-    food: [{
-        _id: '',
-        number: 0,
+    foods: [{
+        food: {},
         foodAmount: 0,
-        name: '',
-        foodPrice: 0
     }],
     orderPrice: 0,
     orderAmount: 0,
@@ -27,9 +22,9 @@ export default function (state = initialState, action) {
         case ORDER_ADD_FOOD: 
             return {
                 ...state,
-                food: action.payload.food,
-                orderPrice: action.payload.orderPrice,
-                orderAmount: action.payload.orderAmount
+                foods: action.payload,
+                orderAmount: action.amount,
+                orderPrice: action.price
             }
         case ORDER_CREATE:
             return {

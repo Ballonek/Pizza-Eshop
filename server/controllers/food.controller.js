@@ -26,7 +26,17 @@ const FoodController = {
         } catch (error) {
             res.status(400).json({ msg: error.message });
         }
-    }
+    },
+    deleteFood: async function (req, res) {
+        try {
+            const food = await Food.findById(req.params.id);
+            
+            food.remove();
+            res.status(204).send(true)
+        } catch (e) {
+            res.status(500).send(false)
+        }
+    },
 }
 
 module.exports = FoodController

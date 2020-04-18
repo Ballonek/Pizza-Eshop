@@ -1,8 +1,5 @@
 import {
-    ORDERS_LOADED,
-    ORDERS_LOADING,
     ORDER_CREATE,
-    ORDER_UPDATE,
     ORDER_ADD_FOOD
 } from '../actions/types';
 import axios from 'axios'
@@ -38,36 +35,31 @@ export const sendOrder = (food, price, firstname, lastname, email, address) => a
 // Check token & load user
 export const addFoodOrder = (food, amount) => async (dispatch, getState) => {
     amount = parseInt(amount);
-    const objIndex = getState().order.food.findIndex((obj => obj._id == food._id));
-    const filteredFood = getState().order.food.filter(e => e._id !== '');
+    let foods = getState().order.foods.filter(value => Object.keys(value.food).length !== 0);
 
-    if (objIndex === -1) {
-        filteredFood.push({
-            _id: food._id,
-            number: food.number,
-            name: food.name,
-            foodPrice: food.price,
-            amount
-        });
+    const index = foods.findIndex(f => f.food._id === food._id)
+
+
+    if(index === -1) {
+        foods.push({ food, amount });
     } else {
-        filteredFood[objIndex].amount = amount;
+        foods[index].amount = amount;
     }
 
-    const orderPrice = filteredFood.reduce(function (acc, obj) {
-        return acc + (obj.foodPrice * obj.amount);
-    }, 0); // 7
+    const orderAmount = foods.reduce((acc, next) => {
+        return acc + next.amount;
+    }, 0);
 
-    const orderAmount = filteredFood.reduce(function (acc, obj) {
-        return acc + obj.amount;
-    }, 0); // 7
+    const orderPrice = foods.reduce((acc, next) => {
+        return acc + (next.amount * next.food.price);
+    }, 0);
+
 
     dispatch({
         type: ORDER_ADD_FOOD,
-        payload: {
-            food: filteredFood,
-            orderPrice,
-            orderAmount
-        }
+        payload: [...foods],
+        amount: orderAmount,
+        price: orderPrice
     })
 
 };

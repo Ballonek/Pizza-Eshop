@@ -70,7 +70,7 @@ export const registerUser = (user) => async dispatch => {
 };
 
 // Login User
-export const loginUser = ({ email, password }) => async dispatch => {
+export const loginUser = (email, password) => async dispatch => {
   const user = { email, password };
 
   // Headers
@@ -102,6 +102,7 @@ export const loginUser = ({ email, password }) => async dispatch => {
 // Logout User
 export const logoutUser = () => async (dispatch, getState) => {
 
+  console.log('logout')
   try {
       const res = await axios.post('/api/users/me/logout','' ,tokenConfig(getState));
       dispatch({
