@@ -2,6 +2,7 @@ const express = require('express');
 const config = require('config');
 const bodyParser = require('body-parser');
 require('./server/db/mongoose');
+const ingredientRouter = require('./server/routes/ingredient.route');
 const userRouter = require('./server/routes/user.route');
 const foodRouter = require('./server/routes/food.route');
 const orderRouter = require('./server/routes/order.route');
@@ -13,8 +14,10 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
+app.use('/api/ingredients', ingredientRouter);
 app.use('/api/users', userRouter);
 app.use('/api/foods', foodRouter);
 app.use('/api/orders', orderRouter);
+
 
 app.listen(port, () => console.log(`Server is on ${port}`));

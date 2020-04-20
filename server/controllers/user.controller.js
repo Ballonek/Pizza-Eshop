@@ -39,7 +39,7 @@ const UserController = {
             res.status(500).json();
         }
     },
-    logoutAll: async function (req, res) {
+    logoutAll: async function logoutAll(req, res) {
         try {
             req.user.tokens = []
             await req.user.save()
@@ -48,11 +48,11 @@ const UserController = {
             res.status(500).send()
         }
     },
-    userProfile: async function (req, res) {
+    userProfile: async function userProfile(req, res) {
         user = req.user;
         res.status(200).json(user);
     },
-    updateProfile: async function (req, res) {
+    updateProfile: async function updateProfile(req, res) {
         const updates = Object.keys(req.body)
         const allowedUpdates = ['name', 'email', 'password', 'age']
         const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -69,57 +69,12 @@ const UserController = {
             res.status(400).send(e)
         }
     },
-    deleteUser: async function (req, res) {
+    deleteUser: async function deleteUser(req, res) {
         try {
             await req.user.remove()
             res.json({ msg: "User succesfully deleted!" })
         } catch (e) {
             res.status(500).send()
-        }
-    },
-    createFavoriteRecipe: async function (req, res) {
-        const user = req.user;
-        const favoriteRecipe = { id: req.body.id, title: req.body.title, image: req.body.image }
-        try {
-            const isFavorite = user.favoriteRecipes.some(recipe => {
-                if (favoriteRecipe.id === recipe.id) {
-                    return true;
-                }
-            });
-            if (isFavorite) {
-                throw Error('This recipe is already in list!');
-            }
-            
-            user.favoriteRecipes.push(favoriteRecipe);
-            await user.save();
-
-            res.status(201).json(user.favoriteRecipes);
-
-        } catch (error) {
-            res.status(400).json({ msg: error.message });
-        }
-    },
-    removeFavoriteRecipe: async function (req, res) {
-        try {
-            const user = req.user;
-
-            const favoriteRecipes = user.favoriteRecipes;
-            const isRecipe = favoriteRecipes.some(recipe => {
-                if (recipe._id.toString() === req.params.id) {
-                    return true;
-                }
-            });
-            if (!isRecipe) {
-                throw Error('It is not favorite recipe')
-            }
-            const removed = favoriteRecipes.filter(recipe => recipe._id.toString() !== req.params.id);
-            user.favoriteRecipes = removed;
-
-            await user.save();
-
-            res.status(202).json({ favoriteRecipes: removed, msg: 'Recipe succesfully deleted' });
-        } catch (error) {
-            res.status(400).send({ msg: error.message });
         }
     }
 }

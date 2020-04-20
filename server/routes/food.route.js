@@ -11,8 +11,8 @@ const {
 
 //Create user in DB + REST API
 router.get('/', getFoods);
-router.post('/', auth, createFood);
-router.delete('/:id', auth, deleteFood);
+router.post('/', createFood);
+router.delete('/:id', deleteFood);
 
 
 

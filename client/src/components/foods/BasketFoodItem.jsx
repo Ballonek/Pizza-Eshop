@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { ListGroupItem, Badge, ListGroupItemHeading, InputGroup, InputGroupAddon, Input, Alert} from 'reactstrap';
 import "./style.scss";
 import { useEffect } from 'react';
-
+import OrderForm from '../basket/OrderForm'
 
 const BasketFoodItem = ({ food, addFoodOrder, order }) => {
     const dispatch = useDispatch();
@@ -35,7 +35,8 @@ const BasketFoodItem = ({ food, addFoodOrder, order }) => {
                 <Input value={amount} min={0} max={10} type="number" onChange={onChange} step="1" />
                 <InputGroupAddon addonType="append"></InputGroupAddon>
                 </InputGroup> 
-                </ListGroupItemHeading>
+                    </ListGroupItemHeading>
+                    <OrderForm />
             </ListGroupItem>
                 :
             <ListGroupItem><Alert color="danger">V košíku nic není.</Alert></ListGroupItem>    

@@ -2,54 +2,54 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 
 const orderSchema = new mongoose.Schema({
-    food: [{
-        _id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Food'
-        },
+    register_date: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    number: {
+        type: Number,
+        required: true,
+        unique: true
+    },
+    foods: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'food',
+        required: true
+    }, {
         amount: {
             type: Number,
             required: true,
-            default: 1
+            default: 0
         }
     }],
-    firstname: {
-        type: String
-    },
-    lastname: {
-        type: String
-    },
-    email: {
-        type: String,
-        validate: validator.isEmail
-    },
-    address: {
-        city: {
-            type: String,
+    customer: {
+        firstname: {
+            type: String
         },
-        street: {
+        lastname: {
+            type: String
+        },
+        email: {
             type: String,
-        }
-    },
+            validate: validator.isEmail
+        },
+        address: {
+            city: {
+                type: String,
+            },
+            street: {
+                type: String,
+            }
+        }},
     price: {
-        type: Number
+        type: Number,
+        required: true,
+        default: 0
     }, 
-    register_date: {
-        type: Date,
-        default: Date.now
-    }
-});
-
-orderSchema.post('save', async function (doc, next) {
-     await doc.populate({
-                path: 'food._id',
-                model: 'Food'
-            }).execPopulate(function() {
-        next();
-    });
 });
 
 
-const Order = mongoose.model('Order', orderSchema);
+const Order = mongoose.model('order', orderSchema);
 
 module.exports = Order; 

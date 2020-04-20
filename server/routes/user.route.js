@@ -25,10 +25,6 @@ router.post('/me/logout', auth, logoutUser);
 router.post('/me/logoutAll', auth, logoutAll);
 //User Progile API
 router.get('/me', auth, userProfile);
-//Add favorite recipe 
-router.post('/me/recipes', auth, createFavoriteRecipe);
-//Remove favorite recipe 
-router.delete('/me/recipes/:id', auth, removeFavoriteRecipe);
 //UPRADE User Profile
 router.patch('/me', auth, updateProfile);
 //DELETE User Profile

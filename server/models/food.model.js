@@ -11,20 +11,23 @@ const foodSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    description: {
+    category: {
         type: String,
         required: true
     },
+    ingredients: [{
+        type: mongoose.Schema.Types.ObjectId, ref: 'ingredient'
+    }],
     price: {
         type: Number,
         required: true
     }, 
-    register_date: {
-        type: Date,
-        default: Date.now
-    }
+    description: {
+        type: String,
+        default: ''
+    },
 });
 
-const Food = mongoose.model('Food', foodSchema);
+const Food = mongoose.model('food', foodSchema);
 
 module.exports = Food; 

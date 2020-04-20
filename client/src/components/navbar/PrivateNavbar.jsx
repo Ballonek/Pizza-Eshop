@@ -13,10 +13,13 @@ const PrivateMenu = ({ setUserView }) => {
                 <NavbarBrand>Pizza</NavbarBrand>
                 <Nav navbar>
                     <NavItem>
-                        <Link to='/dashboard'>Přehled</Link>
+                        <Link to='/admin/dashboard'>Přehled</Link>
                     </NavItem>
                     <NavItem>
-                        <Link to="/jidla">Jídla</Link>
+                        <Link to="/admin/foods">Jídla</Link>
+                </NavItem>
+                <NavItem>
+                    <Link to="/admin/ingredients">Ingredience</Link>
                 </NavItem>
                 <div className="nav-footer">
                     <NavItem className="view-item">
