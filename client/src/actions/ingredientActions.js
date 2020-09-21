@@ -11,7 +11,8 @@ import {
 } from './types';
 
 // Check token & load user
-export const loadIngredients = () => async dispatch => {
+export const loadIngredients = () => async (dispatch, getState) => {
+    if (getState().ingredients.loaded) return;
     dispatch({ type: INGREDIENTS_LOADING });
     
     const config = {

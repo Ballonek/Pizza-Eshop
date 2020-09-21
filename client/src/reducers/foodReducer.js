@@ -7,12 +7,7 @@ import {
 
 const initialState = {
     isLoading: false,
-    foods: [{
-        number: 0,
-        price: 0,
-        name: '',
-        description: ''
-    }]
+    foods: []
 };
 
 export default function (state = initialState, action) {

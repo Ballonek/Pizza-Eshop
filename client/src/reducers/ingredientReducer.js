@@ -3,7 +3,8 @@ import { INGREDIENTS_LOADING, INGREDIENTS_LOADED, INGREDIENTS_ERROR, INGREDIENT_
 const initialState = {
     isLoading: false,
     ingredients: [],
-    msg: null
+    msg: null,
+    loaded: false
 };
 
 export default function (state = initialState, action) {
@@ -12,7 +13,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 ingredients: action.payload,
-                isLoading: false
+                isLoading: false,
+                loaded: true
             };
         case INGREDIENTS_LOADING:
             return {

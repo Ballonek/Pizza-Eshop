@@ -21,6 +21,7 @@ export const loadFoods = () => async dispatch => {
     };
   try {
       const res = await axios.get('/api/foods/', config);
+
       dispatch({
           type: FOODS_LOADED,
           payload: res.data

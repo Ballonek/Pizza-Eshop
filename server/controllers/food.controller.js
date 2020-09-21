@@ -3,7 +3,7 @@ const Food = require('../models/food.model');
 const FoodController = {
     getFoods: async function getFoods(req,res) {
         try {
-            const foods = await Food.find().populate({ path: 'ingredients', model: 'ingredient' }).sort({number: 1});
+            const foods = await Food.find().populate({ path: 'ingredients', model: 'ingredient' }).sort({ number: 1 });
             return res.status(201).json(foods);
             
         } catch (error) {
@@ -23,7 +23,6 @@ const FoodController = {
 
             await food.save();
 
-            await food.populate({ path: 'ingredients', model: 'ingredient' })
             return res.status(201).json(food);
             
         } catch (error) {
